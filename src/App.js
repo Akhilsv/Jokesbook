@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import { LoadHolder, Loading } from './components/Loading';
 
 
-const Profile = React.lazy(() => import('./components/ProfileHeader'));
+const Profile = React.lazy(() => import('./Pages/Profile'));
 const NewJoke = React.lazy(() => import('./Pages/NewJoke'));
 const JokeContent = React.lazy(() => import('./Pages/JokeContent'));
 function App() {

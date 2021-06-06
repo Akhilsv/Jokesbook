@@ -5,3 +5,7 @@
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
 }
+::selection {
+  color: rgb(255, 255, 255);
+  background: rgba(115, 219, 54, 0.589);
+}

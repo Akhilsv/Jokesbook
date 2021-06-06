@@ -8,7 +8,7 @@ import db from '../../Firebase';
 const ShowComments = (props) => {
 	const { currentUser } = useContext(DataContext);
 	const showDeleteIcon = currentUser.uid === props.uid;
-
+	
 	const deleteHandler = () =>{
 		
 		db.collection(`public`)

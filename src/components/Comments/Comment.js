@@ -1,4 +1,4 @@
-import React,{ useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AddComment from './AddComment';
 import ShowComments from './ShowComments';
@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 const Comment = () => {
 	const [comments, setComments] = useState([]);
 	const location = useLocation();
+	const [loading, setLoading] = useState(true);
 	const postId = location.pathname.split('/')[2];
 
 	useEffect(() => {
@@ -15,7 +16,7 @@ const Comment = () => {
 
 		return () => {
 			fetchData();
-		}
+		};
 	}, []);
 	const fetchData = async () => {
 		const publicJokes = db
@@ -29,19 +30,24 @@ const Comment = () => {
 					const getData = data.data();
 					setComments((prev) => [...prev, getData]);
 				});
+				setLoading(false);
 			});
 		} catch (error) {
 			console.log('error');
 		}
 	};
 
-
 	return (
 		<>
 			<CommentSection>
-				<AddComment  />
+				<AddComment />
 				<ShowCommentSection>
-					{comments &&
+					{loading && <P>Loading...</P>}
+					{comments.length === 0 && !loading && (
+						<P>No comments on this post yet</P>
+					)}
+
+					{!loading &&
 						comments.map((data) => {
 							return (
 								<ShowComments
@@ -80,4 +86,7 @@ const ShowCommentSection = styled.div`
 	align-items: center;
 	transition: all 1s ease-in;
 	padding: 10px 0px;
+`;
+const P = styled.p`
+	color: #d4d4d4;
 `;
