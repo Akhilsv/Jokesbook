@@ -41,7 +41,7 @@ const JokeContainer = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	margin: 10px;
+	margin: 10px auto;
 	transition: all 0.5s;
 	border-radius: 10px;
 	&:hover {

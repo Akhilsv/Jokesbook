@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ProfileBody = () => {
+const ProfileBody = ({ filterData }) => {
+	console.log(filterData);
 	return (
 		<>
 			<Body></Body>

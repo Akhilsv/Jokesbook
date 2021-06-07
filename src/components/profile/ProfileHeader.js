@@ -3,10 +3,8 @@ import styled from 'styled-components';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 
 const ProfileHeader = ({ data, user,value}) => {
-	const [postValue, setPostvalue] = useState();
-	console.log(data);
+	const [postValue, setPostvalue] = useState('Posts');
 
-	
 	useEffect(() => {
 		value(postValue);
 	}, [postValue]);
