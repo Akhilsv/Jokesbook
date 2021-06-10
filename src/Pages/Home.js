@@ -16,15 +16,11 @@ const Home = () => {
 	const logout = () => {
 		auth.signOut();
 	};
-
-	useEffect(() => {
-		fetchData();
-	}, []);
-	
-	const fetchData = async() => {
+	/* const fetchData = () => {
 		const publicJokes = db.collection(`public`);
 		try {
-			publicJokes.onSnapshot((res) => {
+		publicJokes.onSnapshot((res) => {
+				setData([]);
 				res.forEach((data) => {
 					const getData = data.data();
 					setData((p) => {
@@ -32,11 +28,26 @@ const Home = () => {
 					});
 				});
 				setLoading(false);
+				
 			});
 		} catch (error) {
 			console.log('error');
 		}
-	};
+	}; */
+
+	useEffect(() => {
+	const tree = db.collection(`public`).onSnapshot((res) => {
+			setData([]);
+			res.forEach((data) => {
+				const getData = data.data();
+				setData((p) => {
+					return [getData, ...p];
+				});
+			});
+			setLoading(false);
+		});
+		return ()=> tree();
+	}, []);
 
 	return (
 		<>
@@ -67,8 +78,8 @@ const Home = () => {
 							/>
 						);
 					})}
+				<button onClick={logout}>Logout</button>
 			</JokesContainer>
-			<button onClick={logout}>Logout</button>
 		</>
 	);
 };

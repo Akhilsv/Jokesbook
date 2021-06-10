@@ -1,23 +1,53 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { FaEye, FaBookmark, FaRegCommentDots } from 'react-icons/fa';
 import { AiOutlineHeart } from 'react-icons/ai';
-
-
-
-
+import { FaHeart } from 'react-icons/fa';
+import firebase from 'firebase/app';
 import { IoPersonCircleOutline } from 'react-icons/io5';
+import { DataContext } from '../DataContext';
+import db from '../Firebase';
 
 function Jokes(props) {
+	const { currentUser } = useContext(DataContext);
 	const history = useHistory();
 	const viewHandler = () => {
 		history.push(`jokes/${props.id}`);
 	};
+
+	// db.collection(`public`)
+	// .doc(`${props.id}`)
+	// .collection('likes')
+	// 	.where('regions', 'array-contains', 'west_coast');
+	let path = db
+		.collection(`public`)
+		.doc(`${props.id}`)
+		.collection('likes')
+		.doc(`z2dcl7qjU2o4Ygd84Ir3`);
+
+	// useEffect(() => {
+
+	// 	path.where('1', "array-contains", `${currentUser.uid}`)
+	// 		.then(r => console.log(r))
+	// 		.catch(e => console.log(e))
+
+	// },[])
+
+	const likeHandler = () => {
+		db.collection(`public`)
+			.doc(`${props.id}`)
+			.collection('likes')
+			.doc(`z2dcl7qjU2o4Ygd84Ir3`)
+			.update({
+				1: firebase.firestore.FieldValue.arrayUnion(`${currentUser.uid}`),
+			})
+			.then(() => console.log('Comment is added'))
+			.catch((e) => console.log(e));
+	};
 	return (
 		<>
 			<JokeContainer>
-			
 				<Header>
 					<ProfileIcon />
 					<Name>{props.name}</Name>
@@ -25,6 +55,7 @@ function Jokes(props) {
 				<Description>{props.joke}</Description>
 				<Holder>
 					<Icon onClick={viewHandler} />
+					<Heart onClick={likeHandler} />
 					<FaRegCommentDots onClick={viewHandler} />
 					<BookMark />
 				</Holder>
@@ -50,10 +81,10 @@ const JokeContainer = styled.div`
 	}
 `;
 const Header = styled.div`
-width:100%;
-display: flex;
-align-items: center;
-`
+	width: 100%;
+	display: flex;
+	align-items: center;
+`;
 const ProfileIcon = styled(IoPersonCircleOutline)`
 	font-size: 40px;
 	color: #ffffffeb;
@@ -79,12 +110,20 @@ const Description = styled.div`
 	color: #cfcfcfeb;
 	padding-bottom: 15px;
 `;
-const Icon = styled(AiOutlineHeart)`
+const Icon = styled(FaEye)`
 	transition: all 0.5s;
 	font-size: 1.2rem;
 	&:hover {
 		transform: rotate(360deg);
 		fill: #5678e7;
+	}
+`;
+const Heart = styled(FaHeart)`
+	transition: all 0.5s;
+	font-size: 1.2rem;
+	&:hover {
+		transform: scale(1.1);
+		fill: #f56c6c;
 	}
 `;
 const BookMark = styled(FaBookmark)`

@@ -10,21 +10,14 @@ const Comment = () => {
 	const location = useLocation();
 	const [loading, setLoading] = useState(true);
 	const postId = location.pathname.split('/')[2];
+	
 
 	useEffect(() => {
-		fetchData();
-
-		return () => {
-			fetchData();
-		};
-	}, []);
-	const fetchData = async () => {
-		const publicJokes = db
+		const sub = db
 			.collection(`public`)
 			.doc(`${postId}`)
-			.collection('comments');
-		try {
-			publicJokes.onSnapshot((res) => {
+			.collection('comments')
+			.onSnapshot((res) => {
 				setComments([]);
 				res.forEach((data) => {
 					const getData = data.data();
@@ -32,10 +25,9 @@ const Comment = () => {
 				});
 				setLoading(false);
 			});
-		} catch (error) {
-			console.log('error');
-		}
-	};
+
+		return () => sub();
+	}, []);
 
 	return (
 		<>

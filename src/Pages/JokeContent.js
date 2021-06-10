@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-
 import styled from 'styled-components';
 import { BsPerson } from 'react-icons/bs';
 import db from '../Firebase';
@@ -119,3 +118,7 @@ const Button = styled.button`
 	}
 `;
 export default JokeContent;
+var citiesRef = db.collection('cities');
+
+// Create a query against the collection.
+var query = citiesRef.where('state', '==', 'CA');
