@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { DataContext } from '../DataContext';
-import { auth } from '../Firebase';
+import db, { auth } from '../Firebase';
 import { Form, Label, Input, Button } from './NewJoke';
 
 function Auth() {
@@ -40,6 +40,7 @@ function Auth() {
 						displayName: username,
 					});
 					setIsLoggedIn(true);
+					db.collection(`users`).doc(`${user.uid}`).set({});
 					history.push('/jokes');
 				})
 

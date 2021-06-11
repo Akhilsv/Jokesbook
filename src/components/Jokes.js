@@ -13,49 +13,38 @@ function Jokes(props) {
 	const { currentUser } = useContext(DataContext);
 	const history = useHistory();
 	const viewHandler = () => {
-		history.push(`jokes/${props.id}`);
+		history.push(`jokes/${props.pid}`);
 	};
-
-	// db.collection(`public`)
-	// .doc(`${props.id}`)
-	// .collection('likes')
-	// 	.where('regions', 'array-contains', 'west_coast');
-	let path = db
-		.collection(`public`)
-		.doc(`${props.id}`)
-		.collection('likes')
-		.doc(`z2dcl7qjU2o4Ygd84Ir3`);
-
-	// useEffect(() => {
-
-	// 	path.where('1', "array-contains", `${currentUser.uid}`)
-	// 		.then(r => console.log(r))
-	// 		.catch(e => console.log(e))
-
-	// },[])
-
-	const likeHandler = () => {
-		db.collection(`public`)
-			.doc(`${props.id}`)
-			.collection('likes')
-			.doc(`z2dcl7qjU2o4Ygd84Ir3`)
-			.update({
-				1: firebase.firestore.FieldValue.arrayUnion(`${currentUser.uid}`),
-			})
-			.then(() => console.log('Comment is added'))
-			.catch((e) => console.log(e));
+	const gotoProfileHandler = () => {
+		if (props.uid !== currentUser.uid) {
+			history.push(`jokes/user/${props.uid}`);
+		}
+		else{
+				history.push(`/profile`)
+		}
 	};
+	// const likeHandler = () => {
+	// 	db.collection(`user`)
+	// 		.doc(`${props.id}`)
+	// 		.collection('likes')
+	// 		.doc(`z2dcl7qjU2o4Ygd84Ir3`)
+	// 		.update({
+	// 			1: firebase.firestore.FieldValue.arrayUnion(`${currentUser.uid}`),
+	// 		})
+	// 		.then(() => console.log('Comment is added'))
+	// 		.catch((e) => console.log(e));
+	// };
 	return (
 		<>
 			<JokeContainer>
 				<Header>
-					<ProfileIcon />
+					<ProfileIcon onClick={gotoProfileHandler} />
 					<Name>{props.name}</Name>
 				</Header>
 				<Description>{props.joke}</Description>
 				<Holder>
 					<Icon onClick={viewHandler} />
-					<Heart onClick={likeHandler} />
+					<Heart />
 					<FaRegCommentDots onClick={viewHandler} />
 					<BookMark />
 				</Holder>
@@ -86,6 +75,7 @@ const Header = styled.div`
 	align-items: center;
 `;
 const ProfileIcon = styled(IoPersonCircleOutline)`
+	cursor: pointer;
 	font-size: 40px;
 	color: #ffffffeb;
 `;

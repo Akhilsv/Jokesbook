@@ -12,6 +12,7 @@ import { DataContext } from './DataContext';
 import Auth from './Pages/Auth';
 import styled from 'styled-components';
 import { LoadHolder, Loading } from './components/Loading';
+import PublicProfile from './Pages/PublicProfile';
 
 
 const Profile = React.lazy(() => import('./Pages/Profile'));
@@ -53,6 +54,11 @@ function App() {
 						{isLoggedIn && (
 							<Route exact path='/jokes/:jokeId'>
 								<JokeContent />
+							</Route>
+						)}
+						{isLoggedIn && (
+							<Route exact path='/jokes/user/:uid'>
+								<PublicProfile />
 							</Route>
 						)}
 						{isLoggedIn && (

@@ -53,7 +53,7 @@ const ProfileHeader = ({ data, user, value }) => {
 		</>
 	);
 };
-const Header = styled.div`
+export const Header = styled.div`
 	width: 80vw;
 	margin: 30px auto;
 	border: solid 3px #336fdd;
@@ -69,31 +69,31 @@ const Header = styled.div`
 		margin-top:0;
 	}
 `;
-const DeatalisHolder = styled.div`
+export const DeatalisHolder = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
 `;
-const ColumnHolder = styled.div`
+export const ColumnHolder = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 `;
 
-const ProfilePhoto = styled(IoPersonCircleOutline)`
+export const ProfilePhoto = styled(IoPersonCircleOutline)`
 	fill: white;
 	font-size: 4rem;
 `;
-const UserName = styled.h1`
+export const UserName = styled.h1`
 	text-align: center;
 	font-size: 1rem;
 	color: white;
 	text-transform: capitalize;
 `;
 
-const PostDetailsHolder = styled.div`
+export const PostDetailsHolder = styled.div`
 	width: 70%;
 	display: flex;
 	justify-content: space-around;
@@ -101,12 +101,12 @@ const PostDetailsHolder = styled.div`
 	color: white;
 `;
 
-const PostCount = styled.h1`
+export const PostCount = styled.h1`
 	font-size: 1rem;
 	font-weight: 700;
 	cursor: pointer;
 `;
-const H1 = styled.h1`
+export const H1 = styled.h1`
 	font-size: 1.2rem;
 	font-weight: 500;
 	cursor: pointer;
@@ -115,8 +115,9 @@ const H1 = styled.h1`
 		font-weight: 500;
 	}
 `;
-const EditButton = styled.button`
+export const EditButton = styled.button`
 	font-weight: 600;
+	font-size: 1rem;
 	outline: none;
 	width: 150px;
 	height: 30px;

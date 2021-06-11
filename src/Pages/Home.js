@@ -16,39 +16,28 @@ const Home = () => {
 	const logout = () => {
 		auth.signOut();
 	};
-	/* const fetchData = () => {
-		const publicJokes = db.collection(`public`);
-		try {
-		publicJokes.onSnapshot((res) => {
-				setData([]);
-				res.forEach((data) => {
-					const getData = data.data();
-					setData((p) => {
-						return [getData, ...p];
-					});
-				});
-				setLoading(false);
-				
-			});
-		} catch (error) {
-			console.log('error');
-		}
-	}; */
 
 	useEffect(() => {
-	const tree = db.collection(`public`).onSnapshot((res) => {
+		const tree = db.collectionGroup(`public`).where('type','==','private').onSnapshot((res) => {
+			let arr = [];
 			setData([]);
-			res.forEach((data) => {
-				const getData = data.data();
-				setData((p) => {
-					return [getData, ...p];
-				});
+			res.forEach((datas) => {
+				return arr.push({ ...datas.data(), pid: datas.id });
+				//  setData((prev) => {
+				// 	return [...prev,{...datas.data(),pid:datas.id}]
+				// })
 			});
+			console.log('here');
+			setData(arr);
 			setLoading(false);
 		});
-		return ()=> tree();
+
+		return () => {
+			tree();
+		};
 	}, []);
 
+	// !loading && console.log(data), console.log(loading);
 	return (
 		<>
 			<JokesContainer>
@@ -70,7 +59,8 @@ const Home = () => {
 						return (
 							<Jokes
 								key={joke.id}
-								id={joke.id}
+								pid={joke.pid}
+								uid={joke.uid}
 								name={joke.name}
 								title={joke.title}
 								joke={joke.joke}

@@ -11,20 +11,23 @@ const JokeContent = () => {
 	const [joke, setJoke] = useState('');
 	const [loading, setLoading] = useState(true);
 	const params = useParams();
+
 	useEffect(() => {
-		db.collection('public')
-			.doc(`${params.jokeId}`)
+		db.collectionGroup(`public`)
 			.get()
 			.then((res) => {
-				if (res.exists) {
-					return setJoke(res.data()), setLoading(false);
-				} else {
-					console.log('no data');
-				}
-			});
-	}, []);
-
-
+				res.forEach((data) => {
+					if (data.id === params.jokeId) {
+						setJoke(data.data());
+					} else {
+						console.log('here');
+					}
+				});
+				setLoading(false);
+			})
+			.catch((e) => console.log(e));
+	}, [params.jokeId]);
+	
 
 	const backHandler = () => {
 		history.push('/jokes');
@@ -50,7 +53,7 @@ const JokeContent = () => {
 					{/* <ButtonHolder>
 						<Button onClick={backHandler}>Back</Button>
 					</ButtonHolder> */}
-					<Comment />
+					<Comment user={joke} />
 				</>
 			)}
 		</>

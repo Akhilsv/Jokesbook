@@ -20,9 +20,21 @@ const NewJoke = () => {
 		setErrorMessage('');
 	};
 	const radioButtonhandler = (e) => {
-		console.log(e.target.value);
+		
 		setType(e.target.value);
 	};
+	// array.sort(function (a, b) {
+	// 	// Turn your strings into dates, and then subtract them
+	// 	// to get a value that is either negative, positive, or zero.
+	// 	return new Date(b.date) - new Date(a.date);
+	// });
+		
+	let array = [{ id: 1, date: 'Mar 1 2008 10:00:00 AM' }, { id: 2, date: 'Mar 8 2011 08:00:00 AM}' }];
+	let sorted = array.sort(function (a, b) {
+		return new Date(b.date) - new Date(a.date);
+	});
+	console.log(sorted);
+
 	const submithandler = (e) => {
 		e.preventDefault();
 		const date = new Date();
@@ -36,6 +48,7 @@ const NewJoke = () => {
 		const newJoke = {
 			id: Math.random().toString(),
 			name: currentUser.displayName,
+			uid:currentUser.uid,
 			title,
 			joke,
 			type,
@@ -45,22 +58,21 @@ const NewJoke = () => {
 		setErrorMessage('Submitted');
 
 		let user = auth.currentUser;
-		db.collection(`${user.uid}`)
-			.add(newJoke)
-			.then(() => console.log('Added to personal account'))
-			.catch((e) => console.log(e));
-		if (type === 'public') {
-			db.collection(`public`)
-				.doc(`${newJoke.id}`)
-				.set(newJoke)
-				.then(() => console.log('Added to public post'))
-				.catch((e) => console.log(e));
-		}
+		
+		const addDataHandler = (type) => {
+			db.collection(`users/${user.uid}/${type}`)
+				.add(newJoke)
+				.then(() => console.log(`added to ${type} post`))
+		 		.catch((e) => console.log(e));
+		};
+		addDataHandler(type);
 		history.push('/jokes');
 		setTitle('');
 		setJoke('');
 		setType('');
 	};
+
+
 
 	return (
 		<>

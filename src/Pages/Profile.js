@@ -8,47 +8,40 @@ import ProfileBody from '../components/profile/ProfileBody';
 import Jokes from '../components/Jokes';
 
 const Profile = () => {
-	const [posts, setPosts] = useState([]);
+	const [publicPosts, setPublicPosts] = useState([]);
+	const [privatePosts, setPrivatePosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const { currentUser } = useContext(DataContext);
-	const [filteredData,setFilteredData] = useState([])
+	const [value, setValue] = useState(`public`);
 	useEffect(() => {
-		fetchData();
+		fetchData('public', setPublicPosts);
+		fetchData('private', setPrivatePosts);
+		
 	}, []);
-	
-	const fetchData = async () => {
+
+	const fetchData = (type, state) => {
 		try {
-			db.collection(`${currentUser.uid}`).onSnapshot((res) => {
-				let arr = [];
-				res.forEach((data) => {
-					const getData = data.data();
-					arr.push(getData);
-					// setPosts((p) => [getData, ...p]);
+			db.collection(`users`)
+				.doc(`${currentUser.uid}`)
+				.collection(`${type}`)
+				.onSnapshot((res) => {
+					console.log(res);
+					let arr = [];
+					res.forEach((data) => {
+						const getData = data.data();
+						arr.push({ ...getData, pid: data.id });
+						// setPosts((p) => [getData, ...p]);
+					});
+					state(arr);
 				});
-				setPosts(arr);
-				setLoading(false);
-			});
 		} catch (error) {
-			console.log('error');
+			console.log(error);
 		}
 	};
-
+	const all = [...publicPosts, ...privatePosts];
+	console.log(all);
 	const getValueHandler = (value) => {
-		if (value === 'Public') {
-			let data = posts.filter((post) => {
-				return post.type === 'public';
-			});
-			return setFilteredData(data)
-		}
-		if (value === 'Private') {
-			let data = posts.filter((post) => {
-				return post.type === 'private';
-			});
-			return setFilteredData(data);
-		}
-		else {
-			return setFilteredData(posts)
-		}
+		setValue(value);
 	};
 
 	return (
@@ -61,26 +54,25 @@ const Profile = () => {
 
 			{!loading && (
 				<ProfileHeader
-					data={posts}
+					data={publicPosts}
 					user={currentUser.displayName}
 					value={getValueHandler}
 				/>
 			)}
 
-			{!loading &&
-				filteredData.map((joke) => {
-					return (
-						<Jokes
-							key={joke.id}
-							id={joke.id}
-							name={joke.name}
-							title={joke.title}
-							joke={joke.joke}
-							date={joke.date}
-						/>
-					);
-				})
-				}
+			{!loading && publicPosts.map((joke) => {
+						return (
+							<Jokes
+								key={joke.id}
+								pid={joke.pid}
+								uid={joke.uid}
+								name={joke.name}
+								title={joke.title}
+								joke={joke.joke}
+								date={joke.date}
+							/>
+						);
+				  })}
 		</>
 	);
 };

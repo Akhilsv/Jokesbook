@@ -5,16 +5,16 @@ import ShowComments from './ShowComments';
 import db from '../../Firebase';
 import { useLocation } from 'react-router-dom';
 
-const Comment = () => {
+const Comment = ({user}) => {
 	const [comments, setComments] = useState([]);
 	const location = useLocation();
 	const [loading, setLoading] = useState(true);
 	const postId = location.pathname.split('/')[2];
-	
+
 
 	useEffect(() => {
 		const sub = db
-			.collection(`public`)
+			.collection(`users/${user.uid}/public`)
 			.doc(`${postId}`)
 			.collection('comments')
 			.onSnapshot((res) => {
@@ -32,7 +32,7 @@ const Comment = () => {
 	return (
 		<>
 			<CommentSection>
-				<AddComment />
+				<AddComment user={ user}/>
 				<ShowCommentSection>
 					{loading && <P>Loading...</P>}
 					{comments.length === 0 && !loading && (

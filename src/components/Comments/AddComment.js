@@ -5,10 +5,10 @@ import { DataContext } from '../../DataContext';
 import db from '../../Firebase';
 import { useLocation } from 'react-router-dom';
 
-const AddComment = () => {
+const AddComment = ({user}) => {
 	const { currentUser } = useContext(DataContext);
 
-	console.log();
+
 	const [comment, setComment] = useState('');
 	const location = useLocation();
 	const postId = location.pathname.split('/')[2];
@@ -26,7 +26,7 @@ const AddComment = () => {
 			name: currentUser.displayName,
 		};
 
-		db.collection(`public`)
+		db.collection(`users/${user.uid}/public`)
 			.doc(`${postId}`)
 			.collection('comments')
 			.doc(`${commentData.id}`)
