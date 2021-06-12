@@ -5,8 +5,9 @@ import { DataContext } from '../DataContext';
 import { GoHome } from 'react-icons/go';
 import { CgAddR } from 'react-icons/cg';
 import { BsPerson } from 'react-icons/bs';
+import DarkModeToggle from 'react-dark-mode-toggle';
 
-function Nav() {
+function Nav({is,set}) {
 	const { status } = useContext(DataContext);
 	const [isLoggedIn, setIsLoggedIn] = status;
 	
@@ -14,24 +15,35 @@ function Nav() {
 		<>
 			<NavContainer>
 				<NavLogo>React</NavLogo>
+				<Toggle onChange={set} checked={is} size={60} />
 				{isLoggedIn && (
-					<NavMenuHolder>
-						<NavLinks to='/jokes' activeClassName='selected'>
-							<GoHome />
-						</NavLinks>
-						<NavLinks to='/new-joke' activeClassName='selected'>
-							<CgAddR />
-						</NavLinks>
-						<NavLinks to='/profile' activeClassName='selected'>
-							<BsPerson />
-						</NavLinks>
-					</NavMenuHolder>
+					<>
+						<NavMenuHolder>
+							<NavLinks to='/jokes' activeClassName='selected'>
+								<GoHome />
+							</NavLinks>
+							<NavLinks to='/new-joke' activeClassName='selected'>
+								<CgAddR />
+							</NavLinks>
+							<NavLinks to='/profile' activeClassName='selected'>
+								<BsPerson />
+							</NavLinks>
+						</NavMenuHolder>
+					</>
 				)}
 			</NavContainer>
 		</>
 	);
 }
-
+const Toggle = styled(DarkModeToggle)`
+	margin-left: 30px;
+	flex: 1;
+	@media (max-width: 600px) {
+		position: absolute;
+		right:0;
+		margin-right:20px;
+	}
+`;
 const NavContainer = styled.div`
 	width: 100%;
 	height: 60px;
@@ -39,14 +51,14 @@ const NavContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	padding: 1rem 1.5rem;
+
 	@media (max-width: 500px) {
 		padding: 1rem 0rem 1rem 1rem;
 	}
 `;
 const NavLogo = styled.h1`
-	transition: all 0.4s;
 	font-size: 2rem;
-	color: #ffffff;
+	
 	@media (max-width: 700px) {
 		font-size: 1.5rem;
 	}
@@ -56,18 +68,30 @@ const NavMenuHolder = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+
 	@media (max-width: 800px) {
 		width: 50%;
+	}
+	@media (max-width: 600px) {
+		color: black;
+		height: 50px;
+		width: 100%;
+		left: 0;
+		background-color: ${(p) => p.theme.menuBackground};
+
+		position: fixed;
+		bottom: 0;
+		/* border-radius: 20% / 5%; */
+		border-top-left-radius: 200px;
+		border-top-right-radius: 200px;
 	}
 `;
 const NavLinks = styled(NavLink)`
 	text-decoration: none;
-	color: white;
+	color: ${(p) => p.theme.fontColor};
 	font-size: 1.5rem;
 	transition: all 0.4s;
-	&:hover {
-		color: #80ff80;
-	}
+
 	&.selected {
 		color: #09e209;
 		opacity: 0.7;

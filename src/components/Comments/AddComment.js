@@ -26,7 +26,7 @@ const AddComment = ({user}) => {
 			name: currentUser.displayName,
 		};
 
-		db.collection(`users/${user.uid}/public`)
+		db.collection(`users/${user.uid}/posts`)
 			.doc(`${postId}`)
 			.collection('comments')
 			.doc(`${commentData.id}`)
@@ -69,7 +69,7 @@ const AddCommentSection = styled.div`
 	justify-content: space-around;
 	align-items: center;
 	position: relative;
-	transition: all 1s ease-in;
+	transition: all 1s ;
 `;
 const UserProfilePhoto = styled(BsPerson)`
 	fill: #7cf74b;
@@ -79,7 +79,7 @@ const UserProfilePhoto = styled(BsPerson)`
 	border-radius: 50px;
 `;
 const CommentInput = styled.input`
-	color: white;
+	color: ${(p) => p.theme.fontColor};
 	font-size: 1rem;
 	padding: 0px 10px 5px 10px;
 	width: 90%;
@@ -112,7 +112,7 @@ const Button = styled.button`
 	height: 32px;
 	font-weight: 600;
 	margin-right: 20px;
-	color: #e2e2e2;
+	color: ${(p) => p.theme.fontColor};
 
 	background: ${({ colors }) => (colors ? '#008307' : 'none')};
 	@media (max-width: 600px) {

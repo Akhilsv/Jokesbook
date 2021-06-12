@@ -45,7 +45,7 @@ function Auth() {
 				})
 
 				.catch((error) => {
-					console.log(error.message);
+					setErrorMessage(error.message);
 				});
 		} else {
 			auth
@@ -83,18 +83,19 @@ function Auth() {
 const FormHolder = styled.div`
 	width: 600px;
 	height: 80vh;
+	color: ${(p) => p.theme.fontColor};
 	margin: 10px auto 0px auto;
 	@media (max-width: 700px) {
 		width: 95vw;
 	}
 `;
 const H1 = styled.h1`
-	color: white;
+
 	font-size: 18px;
 `;
 const H2 = styled.h2`
 	margin-top: 10px;
-	color: #ffffffd5;
+
 	font-size: 13px;
 `;
 const P = styled.p`

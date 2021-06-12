@@ -14,6 +14,7 @@ import {
 	DeatalisHolder,
 } from '../components/profile/ProfileHeader';
 import db from '../Firebase';
+import { JokesContainer } from './Profile';
 
 const PublicProfile = () => {
 	const [posts, setPosts] = useState();
@@ -27,7 +28,7 @@ const PublicProfile = () => {
 		try {
 			db.collection(`users`)
 				.doc(`${params.uid}`)
-				.collection(`public`)
+				.collection(`posts`)
 				.onSnapshot((res) => {
 					console.log(res);
 					let arr = [];
@@ -67,22 +68,23 @@ const PublicProfile = () => {
 						</PostDetailsHolder>
 					</DeatalisHolder>
 				</Header>
-            )}
-            
-			{!loading &&
-				posts.map((joke) => {
-					return (
-						<Jokes
-							key={joke.id}
-							pid={joke.pid}
-							uid={joke.uid}
-							name={joke.name}
-							title={joke.title}
-							joke={joke.joke}
-							date={joke.date}
-						/>
-					);
-				})}
+			)}
+			<JokesContainer>
+				{!loading &&
+					posts.map((joke) => {
+						return (
+							<Jokes
+								key={joke.id}
+								pid={joke.pid}
+								uid={joke.uid}
+								name={joke.name}
+								title={joke.title}
+								joke={joke.joke}
+								date={joke.date}
+							/>
+						);
+					})}
+			</JokesContainer>
 		</>
 	);
 };

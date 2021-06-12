@@ -8,40 +8,46 @@ import ProfileBody from '../components/profile/ProfileBody';
 import Jokes from '../components/Jokes';
 
 const Profile = () => {
-	const [publicPosts, setPublicPosts] = useState([]);
-	const [privatePosts, setPrivatePosts] = useState([]);
+	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const { currentUser } = useContext(DataContext);
-	const [value, setValue] = useState(`public`);
+	const [filteredData, setFilteredData] = useState([]);
 	useEffect(() => {
-		fetchData('public', setPublicPosts);
-		fetchData('private', setPrivatePosts);
-		
+		fetchData();
 	}, []);
 
-	const fetchData = (type, state) => {
+	const fetchData = async () => {
 		try {
-			db.collection(`users`)
-				.doc(`${currentUser.uid}`)
-				.collection(`${type}`)
-				.onSnapshot((res) => {
-					console.log(res);
-					let arr = [];
-					res.forEach((data) => {
-						const getData = data.data();
-						arr.push({ ...getData, pid: data.id });
-						// setPosts((p) => [getData, ...p]);
-					});
-					state(arr);
+			db.collection(`users`).doc(`${currentUser.uid}`).collection('posts').onSnapshot((res) => {
+				let arr = [];
+				res.forEach((data) => {
+					const getData = data.data();
+					 arr.push({ ...getData, pid: data.id });
+					// setPosts((p) => [getData, ...p]);
 				});
+				setPosts(arr);
+				setLoading(false);
+			});
 		} catch (error) {
-			console.log(error);
+			console.log('error');
 		}
 	};
-	const all = [...publicPosts, ...privatePosts];
-	console.log(all);
+
 	const getValueHandler = (value) => {
-		setValue(value);
+		if (value === 'Public') {
+			let data = posts.filter((post) => {
+				return post.type === 'public';
+			});
+			return setFilteredData(data);
+		}
+		if (value === 'Private') {
+			let data = posts.filter((post) => {
+				return post.type === 'private';
+			});
+			return setFilteredData(data);
+		} else {
+			return setFilteredData(posts);
+		}
 	};
 
 	return (
@@ -51,37 +57,35 @@ const Profile = () => {
 					<Loading />
 				</LoadHolder>
 			)}
-
 			{!loading && (
 				<ProfileHeader
-					data={publicPosts}
+					data={posts}
 					user={currentUser.displayName}
 					value={getValueHandler}
 				/>
 			)}
-
-			{!loading && publicPosts.map((joke) => {
+			<JokesContainer>
+				{!loading &&
+					filteredData.map((joke) => {
 						return (
 							<Jokes
 								key={joke.id}
-								pid={joke.pid}
 								uid={joke.uid}
+								pid={joke.pid}
 								name={joke.name}
 								title={joke.title}
 								joke={joke.joke}
 								date={joke.date}
 							/>
 						);
-				  })}
+					})}
+			</JokesContainer>
 		</>
 	);
 };
 
-const JokesContainer = styled.div`
-	margin: 50px 0px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+export const JokesContainer = styled.div`
+	padding-bottom: 50px;
+	
 `;
 export default Profile;

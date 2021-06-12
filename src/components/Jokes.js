@@ -44,9 +44,9 @@ function Jokes(props) {
 				<Description>{props.joke}</Description>
 				<Holder>
 					<Icon onClick={viewHandler} />
-					<Heart />
+					{/* <Heart /> */}
 					<FaRegCommentDots onClick={viewHandler} />
-					<BookMark />
+					{/* <BookMark /> */}
 				</Holder>
 			</JokeContainer>
 		</>
@@ -60,12 +60,13 @@ const JokeContainer = styled.div`
 	padding: 15px;
 	flex-direction: column;
 	justify-content: space-between;
-	align-items: center;
 	margin: 10px auto;
 	transition: all 0.5s;
 	border-radius: 10px;
+	color: ${(p) => p.theme.fontColor};
+	transition: all 1s;
 	&:hover {
-		background-color: #2e2e2e;
+		background-color: ${(p) => p.theme.jokeHover};
 		border-radius: 30px;
 	}
 `;
@@ -77,27 +78,28 @@ const Header = styled.div`
 const ProfileIcon = styled(IoPersonCircleOutline)`
 	cursor: pointer;
 	font-size: 40px;
-	color: #ffffffeb;
+	
 `;
 const Name = styled.h1`
 	text-transform: capitalize;
 	font-size: 1.2rem;
 	font-weight: 600;
 	margin-left: 5px;
-	color: #ffffffeb;
+
 `;
 const Holder = styled.div`
-	width: 90%;
+
+	width: 30%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	color: #ffffffeb;
+	
 `;
 const Description = styled.div`
 	width: 95%;
 	min-height: 10vh;
 	margin: 10px auto;
-	color: #cfcfcfeb;
+	
 	padding-bottom: 15px;
 `;
 const Icon = styled(FaEye)`
@@ -119,7 +121,7 @@ const Heart = styled(FaHeart)`
 const BookMark = styled(FaBookmark)`
 	font-size: 1.2rem;
 
-	fill: #ffffff;
+
 	transition: all 0.5s;
 
 	&:hover {

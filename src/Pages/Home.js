@@ -13,25 +13,26 @@ const Home = () => {
 	const gotoHandler = () => {
 		history.push('/new-joke');
 	};
-	const logout = () => {
-		auth.signOut();
-	};
+	
 
 	useEffect(() => {
-		const tree = db.collectionGroup(`public`).where('type','==','private').onSnapshot((res) => {
+		const tree = db.collectionGroup(`posts`).where('type','==','public').onSnapshot((res) => {
 			let arr = [];
 			setData([]);
 			res.forEach((datas) => {
-				return arr.push({ ...datas.data(), pid: datas.id });
+				 arr.push({ ...datas.data(), pid: datas.id });
 				//  setData((prev) => {
 				// 	return [...prev,{...datas.data(),pid:datas.id}]
 				// })
 			});
-			console.log('here');
+			arr.sort(function (a, b) {
+				// Turn your strings into dates, and then subtract them
+				// to get a value that is either negative, positive, or zero.
+				return b.date - a.date;
+			});
 			setData(arr);
 			setLoading(false);
 		});
-
 		return () => {
 			tree();
 		};
@@ -68,30 +69,32 @@ const Home = () => {
 							/>
 						);
 					})}
-				<button onClick={logout}>Logout</button>
+		
 			</JokesContainer>
 		</>
 	);
 };
 
-const JokesContainer = styled.div`
-	margin: 50px 0px;
+export const JokesContainer = styled.div`
+	margin: 50px 0px 0px 0px;
+
+	padding-bottom: 50px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	color: ${(p) => p.theme.fontColor};
 `;
 const NoDataFound = styled.div`
 	width: 100%;
 	height: 100%;
 	padding: 20px;
 	display: flex;
-
 	justify-content: space-around;
 	align-items: center;
 `;
 const Heading = styled.h1`
-	color: white;
+	
 	font-size: 1rem;
 `;
 

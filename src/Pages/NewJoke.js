@@ -29,11 +29,7 @@ const NewJoke = () => {
 	// 	return new Date(b.date) - new Date(a.date);
 	// });
 		
-	let array = [{ id: 1, date: 'Mar 1 2008 10:00:00 AM' }, { id: 2, date: 'Mar 8 2011 08:00:00 AM}' }];
-	let sorted = array.sort(function (a, b) {
-		return new Date(b.date) - new Date(a.date);
-	});
-	console.log(sorted);
+
 
 	const submithandler = (e) => {
 		e.preventDefault();
@@ -52,17 +48,18 @@ const NewJoke = () => {
 			title,
 			joke,
 			type,
-			date: [day, month, year], //inbulit time stamp ede nodu firebase ali avre date time haku tharee
+			date,
+			// date: [day, month, year], //inbulit time stamp ede nodu firebase ali avre date time haku tharee
 		};
 
 		setErrorMessage('Submitted');
 
 		let user = auth.currentUser;
 		
-		const addDataHandler = (type) => {
-			db.collection(`users/${user.uid}/${type}`)
+		const addDataHandler = async(type) => {
+			await db.collection(`users/${user.uid}/posts`)
 				.add(newJoke)
-				.then(() => console.log(`added to ${type} post`))
+				.then(() => console.log(`added to posts as type of ${type}`))
 		 		.catch((e) => console.log(e));
 		};
 		addDataHandler(type);
@@ -130,6 +127,8 @@ export const Form = styled.form`
 	justify-content: space-around;
 	align-items: center;
 	transition: all 0.4s;
+	color: ${(p) => p.theme.fontColor};
+	transition: all 1s;
 `;
 export const Input = styled.input`
 	height: 50px;
@@ -138,15 +137,11 @@ export const Input = styled.input`
 	padding: 0 2rem;
 	outline: none;
 	border: solid 2px #33dd33;
-	color: #f3f3f3ea;
 	background: none;
 	border-radius: 20px;
 	transition: all 0.5s;
 	text-transform: capitalize;
-	&:hover {
-		border-color: #ebf7eb;
-		color: #ffffff;
-	}
+	
 `;
 const JokeInput = styled.textarea`
 	height: 125px;
@@ -155,26 +150,24 @@ const JokeInput = styled.textarea`
 	padding: 0.3rem 2rem;
 	outline: none;
 	border: solid 2px #33dd33;
-	color: #f3f3f3dd;
+	
 	background: none;
 	border-radius: 10px;
 	transition: all 0.5s;
-	&:hover {
-		color: #33dd33;
-		border-color: #ebf7eb;
-	}
+	
 `;
 export const Button = styled.button`
+	
 	outline: none;
-	color: #33dd33;
-	border: solid 2px #ffffff;
+	color: ${(p) => p.theme.fontColor};
+	border: solid 2px #33dd33;
 	background: none;
 	border-radius: 30px;
 	padding: 7px 15px;
 	font-weight: 600;
 	transition: all 0.5s;
 	&:hover {
-		color: #ffffff;
+		color: #33dd33;
 		border-color: #33dd33;
 	}
 `;
@@ -187,7 +180,7 @@ const ErrorMessage = styled.h1`
 export const Label = styled.label`
 	width: 89%;
 	padding: 10px;
-	color: #ffffff7b;
+	color: ${(p) => p.theme.inputLabel};
 	float: left;
 `;
 const Holder = styled.div`
@@ -220,6 +213,6 @@ const RadioButtonInput = styled.input`
 
 const RadioLabel = styled.label`
 	cursor: pointer;
-	color: #ffffff96;
+	color: ${(p) => p.theme.inputLabel};
 `;
 export default NewJoke;

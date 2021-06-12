@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { IoPersonCircleOutline, IoLogOutOutline } from 'react-icons/io5';
+import { auth } from '../../Firebase';
 
 const ProfileHeader = ({ data, user, value }) => {
 	const [postValue, setPostvalue] = useState('Posts');
@@ -20,6 +21,9 @@ const ProfileHeader = ({ data, user, value }) => {
 	const clickHandler = (e) => {
 		setPostvalue(e.target.innerHTML);
 	};
+		const logout = () => {
+			auth.signOut();
+		};
 
 	return (
 		<>
@@ -46,8 +50,8 @@ const ProfileHeader = ({ data, user, value }) => {
 				</DeatalisHolder>
 				<ButtonsHolder>
 					<EditButton>Edit Profile</EditButton>
-					<LogOut />
-					<LogOut />
+				
+					<LogOut onClick={logout}/>
 				</ButtonsHolder>
 			</Header>
 		</>
@@ -57,6 +61,8 @@ export const Header = styled.div`
 	width: 80vw;
 	margin: 30px auto;
 	border: solid 3px #336fdd;
+
+	color: ${(p) => p.theme.fontColor};
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -66,7 +72,7 @@ export const Header = styled.div`
 		width: 95vw;
 		padding: 10px 20px 10px 20px;
 		border: none;
-		margin-top:0;
+		margin-top: 0;
 	}
 `;
 export const DeatalisHolder = styled.div`
@@ -83,13 +89,13 @@ export const ColumnHolder = styled.div`
 `;
 
 export const ProfilePhoto = styled(IoPersonCircleOutline)`
-	fill: white;
+
 	font-size: 4rem;
 `;
 export const UserName = styled.h1`
 	text-align: center;
 	font-size: 1rem;
-	color: white;
+
 	text-transform: capitalize;
 `;
 
@@ -98,7 +104,7 @@ export const PostDetailsHolder = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	color: white;
+
 `;
 
 export const PostCount = styled.h1`
@@ -123,7 +129,7 @@ export const EditButton = styled.button`
 	height: 30px;
 	border: #336fdd solid 2px;
 	background: #336fdd;
-	color: white;
+
 	transition: all 0.5s;
 	&:hover {
 		background:#003aa5
@@ -140,7 +146,7 @@ const ButtonsHolder = styled.div`
 	width: 100%;
 `;
 const LogOut = styled(IoLogOutOutline)`
-	color: white;
+
 	font-size: 1.5rem;
 `;
 export default ProfileHeader;

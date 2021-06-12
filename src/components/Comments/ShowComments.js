@@ -44,16 +44,17 @@ const CommentHolder = styled.div`
 	justify-content: space-around;
 	transition: all 0.5s ease-in;
 	padding: 10px;
+
 	margin-bottom: 10px;
 	&:hover {
 		background-color: #22222284;
 	}
 `;
 const UserProfilePhoto = styled(BsPerson)`
-	fill: #d1d1d1;
+	color: ${(p) => p.theme.fontColor};
 	padding: 2px;
 	font-size: 2rem;
-	border: solid 2px #ffffffb5;
+	border: solid 2px  ${(p) => p.theme.fontColor};;
 	border-radius: 50px;
 `;
 const NameEditContainer = styled.div`
@@ -65,7 +66,7 @@ const CommentBody = styled.div`
 	width: 90%;
 	display: flex;
 	flex-direction: column;
-	color: white;
+	color: ${(p) => p.theme.fontColor};
 	margin-left: 20px;
 `;
 const UserName = styled.h1`
@@ -74,7 +75,7 @@ const UserName = styled.h1`
 	text-transform: capitalize;
 `;
 const CommentData = styled.h1`
-	color: #ffffffd8;
+	color: ${(p) => p.theme.fontColor};
 	padding-top: 10px;
 	font-size: 1rem;
 	font-weight: 500;
