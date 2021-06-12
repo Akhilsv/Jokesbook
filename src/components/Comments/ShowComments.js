@@ -8,12 +8,14 @@ import db from '../../Firebase';
 const ShowComments = (props) => {
 	const { currentUser } = useContext(DataContext);
 	const showDeleteIcon = currentUser.uid === props.uid;
-	
 	const deleteHandler = () =>{
+	
 		
-		db.collection(`public`)
+		db.collection(`users`)
+			.doc(`${props.user.uid}`)
+			.collection('posts')
 			.doc(`${props.postId}`)
-			.collection('comments')
+			.collection(`comments`)
 			.doc(`${props.id}`)
 			.delete()
 			.then(() => console.log('Comment is deleted'))

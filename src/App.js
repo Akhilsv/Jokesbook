@@ -25,7 +25,7 @@ function App() {
 
 	return (
 		<>
-			<ThemeProvider theme={isDarkMode ? lightTheme : darkTheme}>
+			<ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
 				<Body>
 					<Router>
 						<Nav is={isDarkMode} set={setIsDarkMode} />

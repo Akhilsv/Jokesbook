@@ -141,7 +141,7 @@ export const Input = styled.input`
 	border-radius: 20px;
 	transition: all 0.5s;
 	text-transform: capitalize;
-	
+	color: ${(p) => p.theme.fontColor};
 `;
 const JokeInput = styled.textarea`
 	height: 125px;
@@ -150,7 +150,7 @@ const JokeInput = styled.textarea`
 	padding: 0.3rem 2rem;
 	outline: none;
 	border: solid 2px #33dd33;
-	
+
 	background: none;
 	border-radius: 10px;
 	transition: all 0.5s;

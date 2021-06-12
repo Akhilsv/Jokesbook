@@ -11,7 +11,7 @@ export const darkTheme = {
 	
 	background: '#030303',
 	fontColor: '#fdfdfd',
-	menuBackground: '#030303',
+	menuBackground: '#141414',
 	inputLabel: '#ffffffa0',
 	jokeHover: '#1d1d1d',
 }; 

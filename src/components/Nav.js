@@ -68,7 +68,7 @@ const NavMenuHolder = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-
+	z-index:555;
 	@media (max-width: 800px) {
 		width: 50%;
 	}

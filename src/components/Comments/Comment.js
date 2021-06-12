@@ -32,8 +32,8 @@ const Comment = ({ user }) => {
 		<>
 			<CommentSection>
 				<AddComment user={user} />
-				<ShowCommentSection>
-					{loading && <P>Loading...</P>}
+				<ShowCommentSection >
+					{loading && <P>LoadinShowCommentSectiong...</P>}
 					{comments.length === 0 && !loading && (
 						<P>No comments on this post yet</P>
 					)}
@@ -42,6 +42,7 @@ const Comment = ({ user }) => {
 						comments.map((data) => {
 							return (
 								<ShowComments
+									user={user}
 									postId={postId}
 									key={data.id}
 									uid={data.uid}
