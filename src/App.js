@@ -12,12 +12,12 @@ import { DataContext } from './DataContext';
 import Auth from './Pages/Auth';
 import styled, { ThemeProvider } from 'styled-components';
 import { LoadHolder, Loading } from './components/Loading';
-import PublicProfile from './Pages/PublicProfile';
 import { darkTheme, lightTheme } from './Theme';
 
 const Profile = React.lazy(() => import('./Pages/Profile'));
 const NewJoke = React.lazy(() => import('./Pages/NewJoke'));
 const JokeContent = React.lazy(() => import('./Pages/JokeContent'));
+const PublicProfile = React.lazy(() => import('./Pages/PublicProfile'));
 function App() {
 	const { status } = useContext(DataContext);
 	const [isLoggedIn, setIsLoggedIn] = status;

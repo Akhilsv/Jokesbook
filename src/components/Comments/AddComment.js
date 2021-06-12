@@ -72,10 +72,10 @@ const AddCommentSection = styled.div`
 	transition: all 1s ;
 `;
 const UserProfilePhoto = styled(BsPerson)`
-	fill: #7cf74b;
+	fill: ${(p) => p.theme.fontColor};
 	padding: 2px;
 	font-size: 2rem;
-	border: solid 2px white;
+	border: solid 2px ${(p) => p.theme.fontColor};
 	border-radius: 50px;
 `;
 const CommentInput = styled.input`
@@ -86,7 +86,6 @@ const CommentInput = styled.input`
 	margin-bottom: 30px;
 	outline: none;
 	border: none;
-
 	background: none;
 	border-bottom: 1px solid #33dd33;
 	@media (max-width: 600px) {

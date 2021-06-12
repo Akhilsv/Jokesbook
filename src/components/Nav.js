@@ -68,7 +68,7 @@ const NavMenuHolder = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	z-index:555;
+	z-index: 555;
 	@media (max-width: 800px) {
 		width: 50%;
 	}
@@ -78,7 +78,7 @@ const NavMenuHolder = styled.div`
 		width: 100%;
 		left: 0;
 		background-color: ${(p) => p.theme.menuBackground};
-
+		transition: all 1s;
 		position: fixed;
 		bottom: 0;
 		/* border-radius: 20% / 5%; */

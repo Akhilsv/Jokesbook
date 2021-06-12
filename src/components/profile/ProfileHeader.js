@@ -129,7 +129,7 @@ export const EditButton = styled.button`
 	height: 30px;
 	border: #336fdd solid 2px;
 	background: #336fdd;
-
+	color:white;
 	transition: all 0.5s;
 	&:hover {
 		background:#003aa5

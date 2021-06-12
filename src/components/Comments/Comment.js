@@ -33,7 +33,7 @@ const Comment = ({ user }) => {
 			<CommentSection>
 				<AddComment user={user} />
 				<ShowCommentSection >
-					{loading && <P>LoadinShowCommentSectiong...</P>}
+					{loading && <P>Loading...</P>}
 					{comments.length === 0 && !loading && (
 						<P>No comments on this post yet</P>
 					)}

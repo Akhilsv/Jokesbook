@@ -1,5 +1,5 @@
 export const lightTheme = {
-	background: '#fdfdfd',
+	background: '#f1f1f1',
 	fontColor: '#030303',
 	menuBackground: '#eeeeee',
 	inputLabel: '#000000d1',
@@ -9,7 +9,7 @@ export const lightTheme = {
 
 export const darkTheme = {
 	
-	background: '#030303',
+	background: '#202122',
 	fontColor: '#fdfdfd',
 	menuBackground: '#141414',
 	inputLabel: '#ffffffa0',

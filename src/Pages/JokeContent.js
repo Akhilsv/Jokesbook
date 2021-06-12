@@ -25,14 +25,18 @@ const JokeContent = () => {
 			})
 			.catch((e) => console.log(e));
 	}, [params.jokeId]);
-	
+	let day = '';
+	let month = '';
 	if (!loading) {
-		
 		let t = new Date(1970, 0, 1); // Epoch
 		t.setSeconds(joke.date);
-		console.log(t);
+		day = t.toLocaleString('en-US', { day: '2-digit' });
+		month = t.toLocaleString('en-US', { month: 'short' });
 	}
 
+	const profilePushHandler = () => {
+		history.push(`/jokes/user/${joke.uid}`);
+	};
 	const backHandler = () => {
 		history.push('/jokes');
 	};
@@ -49,10 +53,12 @@ const JokeContent = () => {
 					<JokeContentPage>
 						<Header>
 							<ProfileHolder>
-								<ProfileIcon></ProfileIcon>
+								<ProfileIcon onClick={profilePushHandler}></ProfileIcon>
 								<JokerName>{joke.name}</JokerName>
 							</ProfileHolder>
-							{/* <DateHolder>{`${joke.date[0]} ${joke.date[1]}`}</DateHolder> */}
+							<DateHolder>
+								{`${day}`} {`${month}`}
+							</DateHolder>
 						</Header>
 						<JokeBody>{joke.joke}</JokeBody>
 						{/* <ButtonHolder>
@@ -74,18 +80,19 @@ const JokeContentPage = styled.div`
 `;
 const Header = styled.div`
 	width: 80vw;
-	margin: 30px auto ;
+	margin: 30px auto;
 	border: solid 1px #33dd33;
 	border-radius: 20px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 1rem;
+	transition: all 1s;
 	background: ${(p) => p.theme.background};
 	color: ${(p) => p.theme.fontColor};
 `;
 const ProfileHolder = styled.div`
-	width: 90px;
+	width: 70px;
 	display: flex;
 	justify-content: space-around;
 `;
@@ -95,16 +102,17 @@ const JokerName = styled.h1`
 	color: ${(p) => p.theme.fontColor};
 `;
 const ProfileIcon = styled(BsPerson)`
-	
 	padding: 2px;
 	font-size: 1.5rem;
 	border-radius: 50px;
+	cursor: pointer;
+	
 `;
 
 const DateHolder = styled.h1`
 	font-weight: 500;
 	font-size: 0.9rem;
-	color: #fdfdfdca;
+	color: ${(p) => p.theme.fontColor};
 `;
 const JokeBody = styled.div`
 	width: 80vw;
@@ -112,7 +120,6 @@ const JokeBody = styled.div`
 	margin: 30px auto 0px auto;
 	border: solid 1px #33dd33;
 	padding: 1rem;
-	
 `;
 const ButtonHolder = styled.div`
 	width: 80vw;
@@ -134,4 +141,3 @@ const Button = styled.button`
 	}
 `;
 export default JokeContent;
-

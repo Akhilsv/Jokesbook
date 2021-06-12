@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { FaEye, FaBookmark, FaRegCommentDots } from 'react-icons/fa';
-import { AiOutlineHeart } from 'react-icons/ai';
+import { VscEdit } from 'react-icons/vsc';
 import { FaHeart } from 'react-icons/fa';
 import firebase from 'firebase/app';
 import { IoPersonCircleOutline } from 'react-icons/io5';
@@ -13,16 +13,22 @@ function Jokes(props) {
 	const { currentUser } = useContext(DataContext);
 	const history = useHistory();
 	const viewHandler = () => {
-		history.push(`jokes/${props.pid}`);
+		history.push(`/jokes/${props.pid}`);
 	};
+	const showEditOption = props.uid === currentUser.uid;
 	const gotoProfileHandler = () => {
 		if (props.uid !== currentUser.uid) {
-			history.push(`jokes/user/${props.uid}`);
-		}
-		else{
-				history.push(`/profile`)
+			history.push(`/jokes/user/${props.uid}`);
+		} else {
+			history.push(`/profile`);
 		}
 	};
+
+	let t = new Date(1970, 0, 1); // Epoch
+	t.setSeconds(props.date);
+	let day = t.toLocaleString('en-US', { day: '2-digit' });
+	let month = t.toLocaleString('en-US', { month: 'short' });
+
 	// const likeHandler = () => {
 	// 	db.collection(`user`)
 	// 		.doc(`${props.id}`)
@@ -40,12 +46,16 @@ function Jokes(props) {
 				<Header>
 					<ProfileIcon onClick={gotoProfileHandler} />
 					<Name>{props.name}</Name>
+					<DateH1>
+						{day} {month}
+					</DateH1>
 				</Header>
 				<Description>{props.joke}</Description>
 				<Holder>
 					<Icon onClick={viewHandler} />
-					{/* <Heart /> */}
 					<FaRegCommentDots onClick={viewHandler} />
+
+					{showEditOption && <VscEdit />}
 					{/* <BookMark /> */}
 				</Holder>
 			</JokeContainer>
@@ -74,32 +84,29 @@ const Header = styled.div`
 	width: 100%;
 	display: flex;
 	align-items: center;
+	position: relative;
 `;
 const ProfileIcon = styled(IoPersonCircleOutline)`
 	cursor: pointer;
 	font-size: 40px;
-	
 `;
 const Name = styled.h1`
 	text-transform: capitalize;
 	font-size: 1.2rem;
 	font-weight: 600;
 	margin-left: 5px;
-
 `;
 const Holder = styled.div`
-
 	width: 30%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	
 `;
 const Description = styled.div`
 	width: 95%;
 	min-height: 10vh;
 	margin: 10px auto;
-	
+
 	padding-bottom: 15px;
 `;
 const Icon = styled(FaEye)`
@@ -109,6 +116,12 @@ const Icon = styled(FaEye)`
 		transform: rotate(360deg);
 		fill: #5678e7;
 	}
+`;
+const DateH1 = styled.h1`
+	font-size: 0.7rem;
+	font-weight: 500;
+	position: absolute;
+	right: 0;
 `;
 const Heart = styled(FaHeart)`
 	transition: all 0.5s;
@@ -120,7 +133,6 @@ const Heart = styled(FaHeart)`
 `;
 const BookMark = styled(FaBookmark)`
 	font-size: 1.2rem;
-
 
 	transition: all 0.5s;
 

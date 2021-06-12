@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { DataContext } from '../../DataContext';
 import db from '../../Firebase';
+import { useHistory } from 'react-router-dom';
 
 const ShowComments = (props) => {
+	const history = useHistory();
 	const { currentUser } = useContext(DataContext);
 	const showDeleteIcon = currentUser.uid === props.uid;
-	const deleteHandler = () =>{
-	
-		
+	const deleteHandler = () => {
 		db.collection(`users`)
 			.doc(`${props.user.uid}`)
 			.collection('posts')
@@ -20,16 +20,22 @@ const ShowComments = (props) => {
 			.delete()
 			.then(() => console.log('Comment is deleted'))
 			.catch((e) => console.log(e));
-
-	}
+	};
+	const profilePushHandler = () => {
+		if (currentUser.uid !== props.uid) {
+			history.push(`/jokes/user/${props.uid}`);
+		} else {
+			history.push(`/profile`);
+		}
+	};
 	return (
 		<>
 			<CommentHolder>
-				<UserProfilePhoto />
+				<UserProfilePhoto onClick={profilePushHandler} />
 				<CommentBody>
 					<NameEditContainer>
 						<UserName>{props.name}</UserName>
-						{showDeleteIcon && <AiOutlineDelete onClick={deleteHandler }/>}
+						{showDeleteIcon && <AiOutlineDelete onClick={deleteHandler} />}
 					</NameEditContainer>
 					<CommentData>{props.comment}</CommentData>
 				</CommentBody>
@@ -48,16 +54,18 @@ const CommentHolder = styled.div`
 	padding: 10px;
 
 	margin-bottom: 10px;
-	&:hover {
-		background-color: #22222284;
-	}
 `;
 const UserProfilePhoto = styled(BsPerson)`
+	cursor: pointer;
 	color: ${(p) => p.theme.fontColor};
 	padding: 2px;
 	font-size: 2rem;
-	border: solid 2px  ${(p) => p.theme.fontColor};;
+	border: solid 2px ${(p) => p.theme.fontColor};
 	border-radius: 50px;
+	transition: all 0.5s;
+	&:hover {
+		background-color: #22222284;
+	}
 `;
 const NameEditContainer = styled.div`
 	display: flex;
