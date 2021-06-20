@@ -65,6 +65,7 @@ const Profile = () => {
 				/>
 			)}
 			<JokesContainer>
+				<p>Showing All posts</p>
 				{!loading &&
 					filteredData.map((joke) => {
 						return (
@@ -86,6 +87,9 @@ const Profile = () => {
 
 export const JokesContainer = styled.div`
 	padding-bottom: 50px;
+	& p{
+		text-align:center;
+	} 
 	
 `;
 export default Profile;

@@ -9,23 +9,21 @@ export const DataProvider = (props) => {
 	const [currentUser, setCurrentUser] = useState('');
 
 	useEffect(() => {
-	auth.onAuthStateChanged((user) => {
-		if (user) {
-			setCurrentUser(user);
-			setIsLoggedIn(true);
-			setIsLoading(false);
-		} else {
-			setIsLoggedIn(false);
-			setIsLoading(false);
-		}
-	});
-},[])
-
-	
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				setCurrentUser(user);
+				setIsLoggedIn(true);
+				setIsLoading(false);
+			} else {
+				setIsLoggedIn(false);
+				setIsLoading(false);
+			}
+		});
+	}, []);
 
 	const values = {
 		status: [isLoggesIn, setIsLoggedIn],
-		currentUser: currentUser
+		currentUser: currentUser,
 	};
 	return (
 		<DataContext.Provider value={values}>

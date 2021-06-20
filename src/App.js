@@ -13,6 +13,7 @@ import Auth from './Pages/Auth';
 import styled, { ThemeProvider } from 'styled-components';
 import { LoadHolder, Loading } from './components/Loading';
 import { darkTheme, lightTheme } from './Theme';
+import PostEdit from './Pages/PostEdit';
 
 const Profile = React.lazy(() => import('./Pages/Profile'));
 const NewJoke = React.lazy(() => import('./Pages/NewJoke'));
@@ -67,6 +68,12 @@ function App() {
 										<Profile />
 									</Route>
 								)}
+								{isLoggedIn && (
+									<Route exact path='/:uid/:pid'>
+										<PostEdit />
+									</Route>
+								)}
+								
 								<Route path='*'>
 									<Redirect to='/auth' />
 								</Route>

@@ -28,18 +28,10 @@ function Jokes(props) {
 	t.setSeconds(props.date);
 	let day = t.toLocaleString('en-US', { day: '2-digit' });
 	let month = t.toLocaleString('en-US', { month: 'short' });
-
-	// const likeHandler = () => {
-	// 	db.collection(`user`)
-	// 		.doc(`${props.id}`)
-	// 		.collection('likes')
-	// 		.doc(`z2dcl7qjU2o4Ygd84Ir3`)
-	// 		.update({
-	// 			1: firebase.firestore.FieldValue.arrayUnion(`${currentUser.uid}`),
-	// 		})
-	// 		.then(() => console.log('Comment is added'))
-	// 		.catch((e) => console.log(e));
-	// };
+	
+	const editHandler = () => {
+		history.push(`/${props.pid}/${props.uid}`)
+	}
 	return (
 		<>
 			<JokeContainer>
@@ -55,7 +47,7 @@ function Jokes(props) {
 					<Icon onClick={viewHandler} />
 					<FaRegCommentDots onClick={viewHandler} />
 
-					{showEditOption && <VscEdit />}
+					{showEditOption && <VscEdit onClick={editHandler}/>}
 					{/* <BookMark /> */}
 				</Holder>
 			</JokeContainer>
@@ -101,6 +93,9 @@ const Holder = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	& svg{
+		cursor: pointer;
+	}
 `;
 const Description = styled.div`
 	width: 95%;

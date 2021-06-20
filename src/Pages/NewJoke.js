@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import db, { auth } from '../Firebase';
 import { DataContext } from '../DataContext';
+import db, { auth } from '../Firebase';
+
 
 const NewJoke = () => {
 	const { currentUser } = useContext(DataContext);
@@ -20,16 +21,8 @@ const NewJoke = () => {
 		setErrorMessage('');
 	};
 	const radioButtonhandler = (e) => {
-		
 		setType(e.target.value);
 	};
-	// array.sort(function (a, b) {
-	// 	// Turn your strings into dates, and then subtract them
-	// 	// to get a value that is either negative, positive, or zero.
-	// 	return new Date(b.date) - new Date(a.date);
-	// });
-		
-
 
 	const submithandler = (e) => {
 		e.preventDefault();
@@ -37,30 +30,27 @@ const NewJoke = () => {
 		const day = date.toLocaleString('en-US', { day: '2-digit' });
 		const year = date.getFullYear();
 		const month = date.toLocaleString('en-US', { month: 'short' });
-
 		if (joke.trim() === '' || title.trim() === '') {
 			return setErrorMessage('Input Must be valid');
 		}
 		const newJoke = {
 			id: Math.random().toString(),
 			name: currentUser.displayName,
-			uid:currentUser.uid,
+			uid: currentUser.uid,
 			title,
 			joke,
 			type,
 			date,
 			// date: [day, month, year], //inbulit time stamp ede nodu firebase ali avre date time haku tharee
 		};
-
 		setErrorMessage('Submitted');
-
 		let user = auth.currentUser;
-		
-		const addDataHandler = async(type) => {
-			await db.collection(`users/${user.uid}/posts`)
+		const addDataHandler = async (type) => {
+			await db
+				.collection(`users/${user.uid}/posts`)
 				.add(newJoke)
 				.then(() => console.log(`added to posts as type of ${type}`))
-		 		.catch((e) => console.log(e));
+				.catch((e) => console.log(e));
 		};
 		addDataHandler(type);
 		history.push('/jokes');
@@ -68,8 +58,6 @@ const NewJoke = () => {
 		setJoke('');
 		setType('');
 	};
-
-
 
 	return (
 		<>
@@ -81,7 +69,6 @@ const NewJoke = () => {
 					<Label>Title</Label>
 					<Input value={title} onChange={titleHandler}></Input>
 					<Label>Write your joke</Label>
-
 					<JokeInput onChange={jokeHandler} value={joke}></JokeInput>
 					<Holder>
 						<RadioButtonHolder>
@@ -111,7 +98,7 @@ const NewJoke = () => {
 		</>
 	);
 };
-const FormHolder = styled.div`
+export const FormHolder = styled.div`
 	width: 700px;
 	height: 76vh;
 	margin: 30px auto 0px auto;
@@ -143,21 +130,18 @@ export const Input = styled.input`
 	text-transform: capitalize;
 	color: ${(p) => p.theme.fontColor};
 `;
-const JokeInput = styled.textarea`
+export const JokeInput = styled.textarea`
 	height: 125px;
 	width: 90%;
 	font-size: 1rem;
 	padding: 0.3rem 2rem;
 	outline: none;
 	border: solid 2px #33dd33;
-
 	background: none;
 	border-radius: 10px;
 	transition: all 0.5s;
-	
 `;
 export const Button = styled.button`
-	
 	outline: none;
 	color: ${(p) => p.theme.fontColor};
 	border: solid 2px #33dd33;
@@ -171,7 +155,7 @@ export const Button = styled.button`
 		border-color: #33dd33;
 	}
 `;
-const ErrorMessage = styled.h1`
+export const ErrorMessage = styled.h1`
 	transition: all 0.5s;
 	font-size: 0.7rem;
 	text-align: center;
@@ -183,20 +167,20 @@ export const Label = styled.label`
 	color: ${(p) => p.theme.inputLabel};
 	float: left;
 `;
-const Holder = styled.div`
+export const Holder = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 10px 30px;
 `;
-const RadioButtonHolder = styled.div`
+export const RadioButtonHolder = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	width: 200px;
 `;
-const RadioButtonInput = styled.input`
+export const RadioButtonInput = styled.input`
 	width: 15px;
 	appearance: none;
 	height: 15px;
@@ -211,7 +195,7 @@ const RadioButtonInput = styled.input`
 	}
 `;
 
-const RadioLabel = styled.label`
+export const RadioLabel = styled.label`
 	cursor: pointer;
 	color: ${(p) => p.theme.inputLabel};
 `;

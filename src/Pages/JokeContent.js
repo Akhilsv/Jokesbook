@@ -71,14 +71,14 @@ const JokeContent = () => {
 		</>
 	);
 };
-const JokeContentPage = styled.div`
+export const JokeContentPage = styled.div`
 	width: 100%;
 	height: 100%;
 	background: ${(p) => p.theme.background};
 	margin: 30px auto 0 auto;
 	transition: all 1s;
 `;
-const Header = styled.div`
+export const Header = styled.div`
 	width: 80vw;
 	margin: 30px auto;
 	border: solid 1px #33dd33;
@@ -91,17 +91,17 @@ const Header = styled.div`
 	background: ${(p) => p.theme.background};
 	color: ${(p) => p.theme.fontColor};
 `;
-const ProfileHolder = styled.div`
+export const ProfileHolder = styled.div`
 	width: 70px;
 	display: flex;
 	justify-content: space-around;
 `;
-const JokerName = styled.h1`
+export const JokerName = styled.h1`
 	font-size: 1rem;
 	font-weight: 600;
 	color: ${(p) => p.theme.fontColor};
 `;
-const ProfileIcon = styled(BsPerson)`
+export const ProfileIcon = styled(BsPerson)`
 	padding: 2px;
 	font-size: 1.5rem;
 	border-radius: 50px;
@@ -109,24 +109,24 @@ const ProfileIcon = styled(BsPerson)`
 	
 `;
 
-const DateHolder = styled.h1`
+export const DateHolder = styled.h1`
 	font-weight: 500;
 	font-size: 0.9rem;
 	color: ${(p) => p.theme.fontColor};
 `;
-const JokeBody = styled.div`
+export const JokeBody = styled.div`
 	width: 80vw;
 	min-height: 20vh;
 	margin: 30px auto 0px auto;
 	border: solid 1px #33dd33;
 	padding: 1rem;
 `;
-const ButtonHolder = styled.div`
+export const ButtonHolder = styled.div`
 	width: 80vw;
 	margin: 10px auto;
 	text-align: right;
 `;
-const Button = styled.button`
+export const Button = styled.button`
 	outline: none;
 	color: #33dd33;
 	border: solid 2px #ffffff;

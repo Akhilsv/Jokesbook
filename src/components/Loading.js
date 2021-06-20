@@ -26,7 +26,6 @@ export const LoadHolder = styled.div`
 `;
 
 export const Loading = styled(VscLoading)`
-	
 	width: 150px;
 	height: 150px;
 	animation: ${load} 1000ms infinite;
