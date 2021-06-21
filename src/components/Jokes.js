@@ -116,6 +116,7 @@ const Holder = styled.div`
 	& svg {
 		cursor: pointer;
 		transition: all 0.5s;
+		font-size: 1.2rem;
 		&:hover {
 			transform: scale(1.1);
 			fill: #5678e7;
@@ -137,7 +138,7 @@ const Description = styled.div`
 `;
 const Icon = styled(FaEye)`
 	transition: all 0.5s;
-	font-size: 1.2rem;
+
 	&:hover {
 		transform: rotate(360deg);
 		fill: #5678e7;

@@ -16,8 +16,8 @@ const Profile = () => {
 		fetchData();
 	}, []);
 	useEffect(() => {
-		getValueHandler()
-	},[posts])
+		getValueHandler();
+	}, [posts]);
 	const fetchData = async () => {
 		try {
 			db.collection(`users`)
@@ -32,7 +32,7 @@ const Profile = () => {
 					});
 
 					setPosts(arr);
-					
+
 					setLoading(false);
 				});
 		} catch (error) {
@@ -72,7 +72,9 @@ const Profile = () => {
 				/>
 			)}
 			<JokesContainer>
-				<p>Showing All posts</p>
+				{!loading && filteredData.length === 0 && (
+					<NoPost>No Post yet..</NoPost>
+				)}
 				{!loading &&
 					filteredData.map((joke) => {
 						return (
@@ -97,5 +99,11 @@ export const JokesContainer = styled.div`
 	& p {
 		text-align: center;
 	}
+`;
+const NoPost = styled.div`
+	width: 80%;
+	height: 200px;
+	margin: 20px auto ;
+	border: solid 2px #3eff2c;
 `;
 export default Profile;

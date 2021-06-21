@@ -45,7 +45,7 @@ const BackDrop = styled.div`
 	justify-content: center;
 	align-items: center;
 	z-index: 555;
-	background-color: #000000e2;
+	background-color: ${(p) => p.theme.deleteBackdrop};
 `;
 const MessageHolder = styled.div`
 	position: relative;

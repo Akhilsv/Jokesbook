@@ -1,10 +1,11 @@
 export const lightTheme = {
-	background: '#f1f1f1',
+	background: '#f8f8f8',
 	fontColor: '#030303',
 	menuBackground: '#eeeeee',
 	inputLabel: '#000000d1',
-	jokeHover: '#cccccc',
+	jokeHover: '#ececec',
 	deleteMessageColor: '#313131f4',
+	deleteBackdrop: '#000000e2',
 };
 
 export const darkTheme = {
@@ -14,4 +15,5 @@ export const darkTheme = {
 	inputLabel: '#ffffffa0',
 	jokeHover: '#1d1d1d',
 	deleteMessageColor: '#cececef4',
+	deleteBackdrop: '#ffffffc5',
 }; 
