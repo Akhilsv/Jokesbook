@@ -3,15 +3,15 @@ export const lightTheme = {
 	fontColor: '#030303',
 	menuBackground: '#eeeeee',
 	inputLabel: '#000000d1',
-    jokeHover: '#cccccc',
-   
+	jokeHover: '#cccccc',
+	deleteMessageColor: '#313131f4',
 };
 
 export const darkTheme = {
-	
 	background: '#202122',
 	fontColor: '#fdfdfd',
 	menuBackground: '#141414',
 	inputLabel: '#ffffffa0',
 	jokeHover: '#1d1d1d',
+	deleteMessageColor: '#cececef4',
 }; 

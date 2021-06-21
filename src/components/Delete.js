@@ -10,10 +10,10 @@ const Delete = ({ state, fun }) => {
 	const cancelHandler = () => {
 		setPopup(false);
 	};
-	
+
 	return (
 		<>
-			<BackDrop >
+			<BackDrop>
 				<MessageHolder>
 					<Icon />
 					<Header>
@@ -90,7 +90,7 @@ const Body = styled.div`
 	padding: 20px;
 	text-align: center;
 	& h1 {
-		color: #313131f4;
+		color: ${(p) => p.theme.deleteMessageColor};
 		font-size: 1rem;
 	}
 	@media (max-width: 600px) {
@@ -106,6 +106,7 @@ const Footer = styled.div`
 	& button {
 		outline: none;
 		border: none;
+		cursor: pointer;
 		width: 80px;
 		background: ${(props) => (props ? '#f58f8f' : '#888888')};
 		height: 40px;
