@@ -15,5 +15,5 @@ export const darkTheme = {
 	inputLabel: '#ffffffa0',
 	jokeHover: '#1d1d1d',
 	deleteMessageColor: '#cececef4',
-	deleteBackdrop: '#ffffffc5',
+	deleteBackdrop: '#8a8a8a81',
 }; 
