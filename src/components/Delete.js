@@ -50,7 +50,7 @@ const BackDrop = styled.div`
 const MessageHolder = styled.div`
 	position: relative;
 	width: 50%;
-	height: 300px;
+	height: 350px;
 	border-radius: 10px;
 	padding: 10px 0;
 	z-index: 555;
@@ -61,7 +61,7 @@ const MessageHolder = styled.div`
 	background-color: ${(p) => p.theme.background};
 	@media (max-width: 1000px) {
 		width: 90vw;
-		height: 60vh;
+		height: 50vh;
 	}
 `;
 const Header = styled.div`

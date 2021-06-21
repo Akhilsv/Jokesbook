@@ -112,8 +112,14 @@ const Holder = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
 	& svg {
 		cursor: pointer;
+		transition: all 0.5s;
+		&:hover {
+			transform: scale(1.1);
+			fill: #5678e7;
+		}
 	}
 `;
 const LeftPart = styled.div`
