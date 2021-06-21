@@ -5,6 +5,7 @@ import { DataContext } from '../DataContext';
 import db, { auth } from '../Firebase';
 
 
+
 const NewJoke = () => {
 	const { currentUser } = useContext(DataContext);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -90,6 +91,7 @@ const NewJoke = () => {
 								required
 							/>
 							<RadioLabel htmlFor='private'>Private</RadioLabel>
+							
 						</RadioButtonHolder>
 						<Button>Submit</Button>
 					</Holder>
@@ -135,6 +137,7 @@ export const JokeInput = styled.textarea`
 	width: 90%;
 	font-size: 1rem;
 	padding: 0.3rem 2rem;
+	color: ${(p) => p.theme.fontColor};
 	outline: none;
 	border: solid 2px #33dd33;
 	background: none;

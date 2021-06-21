@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { FaEye, FaBookmark, FaRegCommentDots } from 'react-icons/fa';
@@ -7,10 +7,13 @@ import { FaHeart } from 'react-icons/fa';
 import firebase from 'firebase/app';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { DataContext } from '../DataContext';
+import { AiOutlineDelete } from 'react-icons/ai';
 import db from '../Firebase';
+import Delete from './Delete';
 
 function Jokes(props) {
 	const { currentUser } = useContext(DataContext);
+	const [popup, setPopup] = useState(false);
 	const history = useHistory();
 	const viewHandler = () => {
 		history.push(`/jokes/${props.pid}`);
@@ -28,12 +31,25 @@ function Jokes(props) {
 	t.setSeconds(props.date);
 	let day = t.toLocaleString('en-US', { day: '2-digit' });
 	let month = t.toLocaleString('en-US', { month: 'short' });
-	
+
 	const editHandler = () => {
-		history.push(`/${props.pid}/${props.uid}`)
-	}
+		history.push(`/${props.pid}/${props.uid}`);
+	};
+	const deletePostHandler = () => {
+		db.collection(`users/${props.uid}/posts`)
+			.doc(`/${props.pid}`)
+			.delete()
+			.then(() => console.log('deleted'))
+			.catch((e) => console.log(e));
+		setPopup(false);
+	};
+	const deleteHandler = () => {
+		setPopup(true);
+		console.log(popup);
+	};
 	return (
 		<>
+			{popup && <Delete state={[popup, setPopup]} fun={deletePostHandler} />}
 			<JokeContainer>
 				<Header>
 					<ProfileIcon onClick={gotoProfileHandler} />
@@ -44,11 +60,14 @@ function Jokes(props) {
 				</Header>
 				<Description>{props.joke}</Description>
 				<Holder>
-					<Icon onClick={viewHandler} />
-					<FaRegCommentDots onClick={viewHandler} />
-
-					{showEditOption && <VscEdit onClick={editHandler}/>}
-					{/* <BookMark /> */}
+					<LeftPart>
+						<Icon onClick={viewHandler} />
+						<FaRegCommentDots onClick={viewHandler} />
+					</LeftPart>
+					<LeftPart>
+						{showEditOption && <VscEdit onClick={editHandler} />}
+						{showEditOption && <AiOutlineDelete onClick={deleteHandler} />}
+					</LeftPart>
 				</Holder>
 			</JokeContainer>
 		</>
@@ -89,13 +108,19 @@ const Name = styled.h1`
 	margin-left: 5px;
 `;
 const Holder = styled.div`
-	width: 30%;
+	width: 90%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	& svg{
+	& svg {
 		cursor: pointer;
 	}
+`;
+const LeftPart = styled.div`
+	width: 50%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 `;
 const Description = styled.div`
 	width: 95%;

@@ -15,19 +15,26 @@ const Profile = () => {
 	useEffect(() => {
 		fetchData();
 	}, []);
-
+	useEffect(() => {
+		getValueHandler()
+	},[posts])
 	const fetchData = async () => {
 		try {
-			db.collection(`users`).doc(`${currentUser.uid}`).collection('posts').onSnapshot((res) => {
-				let arr = [];
-				res.forEach((data) => {
-					const getData = data.data();
-					 arr.push({ ...getData, pid: data.id });
-					// setPosts((p) => [getData, ...p]);
+			db.collection(`users`)
+				.doc(`${currentUser.uid}`)
+				.collection('posts')
+				.onSnapshot((res) => {
+					let arr = [];
+					res.forEach((data) => {
+						const getData = data.data();
+						arr.push({ ...getData, pid: data.id });
+						// setPosts((p) => [getData, ...p]);
+					});
+
+					setPosts(arr);
+					
+					setLoading(false);
 				});
-				setPosts(arr);
-				setLoading(false);
-			});
 		} catch (error) {
 			console.log('error');
 		}
@@ -87,9 +94,8 @@ const Profile = () => {
 
 export const JokesContainer = styled.div`
 	padding-bottom: 50px;
-	& p{
-		text-align:center;
-	} 
-	
+	& p {
+		text-align: center;
+	}
 `;
 export default Profile;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { LoadHolder, Loading } from '../components/Loading';
 import db from '../Firebase';
+
 import {
 	Form,
 	FormHolder,
@@ -38,6 +39,18 @@ const PostEdit = () => {
 
 	const submithandler = (e) => {
 		e.preventDefault();
+
+		db.collection(`users/${params.pid}/posts`)
+			.doc(`/${params.uid}`)
+			.update({
+				title,
+				joke,
+				type,
+			})
+            .then(() => {
+                console.log('updated')
+            })
+			.catch((e) => console.log(e));
 	};
 	const titleHandler = (e) => {
 		setTitle(e.target.value);
@@ -62,7 +75,7 @@ const PostEdit = () => {
 					<Form onSubmit={submithandler}>
 						{/* <Label>Joker name</Label>
 					<Input value={name} onChange={nameHandler}></Input> */}
-						<Label>Title</Label>
+						<Label>Title</Label> 
 						<Input value={title} onChange={titleHandler}></Input>
 						<Label>Write your joke</Label>
 						<JokeInput onChange={jokeHandler} value={joke}></JokeInput>
