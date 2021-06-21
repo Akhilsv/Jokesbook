@@ -73,7 +73,10 @@ const Profile = () => {
 			)}
 			<JokesContainer>
 				{!loading && filteredData.length === 0 && (
-					<NoPost>No Post yet..</NoPost>
+					<NoPost>
+						<img src={'/nopost.svg'} alt='post' />
+						<p>No post yet...</p>
+					</NoPost>
 				)}
 				{!loading &&
 					filteredData.map((joke) => {
@@ -101,9 +104,30 @@ export const JokesContainer = styled.div`
 	}
 `;
 const NoPost = styled.div`
-	width: 80%;
+	width: 60%;
 	height: 200px;
-	margin: 20px auto ;
-	border: solid 2px #3eff2c;
+	margin: 20px auto;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+
+	& img {
+		width: 200px;
+		height: 200px;
+	}
+	& p {
+		font-size: 1.4rem;
+		letter-spacing: 2px;
+
+		@media (max-width: 600px) {
+			font-size: 1.1rem;
+			margin-top: 30px;
+		}
+	}
+	@media (max-width: 600px) {
+		flex-direction: column;
+
+		width: 90%;
+	}
 `;
 export default Profile;
