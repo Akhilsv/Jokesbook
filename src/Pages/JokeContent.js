@@ -92,7 +92,7 @@ export const Header = styled.div`
 	color: ${(p) => p.theme.fontColor};
 `;
 export const ProfileHolder = styled.div`
-	width: 70px;
+	width: 100px;
 	display: flex;
 	justify-content: space-around;
 `;

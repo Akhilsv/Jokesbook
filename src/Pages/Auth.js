@@ -41,6 +41,16 @@ function Auth() {
 					});
 					setIsLoggedIn(true);
 					db.collection(`users`).doc(`${user.uid}`).set({});
+					db.collection(`users`)
+						.doc(`${user.uid}`)
+						.collection(`details`)
+						.doc(`data`)
+						.set({
+							name: username,
+							profilePhoto: '',
+							bio: '',
+						});
+
 					history.push('/jokes');
 				})
 
@@ -70,7 +80,10 @@ function Auth() {
 					<Label>Email</Label>
 					<Input value={email} onChange={emailHandler}></Input>
 					<Label>Password</Label>
-					<Input onChange={passwordHandler} value={password}></Input>
+					<Input
+						type='password'
+						onChange={passwordHandler}
+						value={password}></Input>
 					<H2 onClick={changeHaandler}>
 						<P>{login ? `Don't have account?` : `already have an account`}</P>
 					</H2>
@@ -90,7 +103,6 @@ const FormHolder = styled.div`
 	}
 `;
 const H1 = styled.h1`
-
 	font-size: 18px;
 `;
 const H2 = styled.h2`
@@ -100,7 +112,7 @@ const H2 = styled.h2`
 `;
 const P = styled.p`
 	cursor: pointer;
-	margin:10px 0px;
+	margin: 10px 0px;
 `;
 const ErrorMessage = styled.p`
 	margin-top: 10px;
