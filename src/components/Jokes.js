@@ -45,11 +45,10 @@ function Jokes(props) {
 	};
 	const deleteHandler = () => {
 		setPopup(true);
-		console.log(popup);
 	};
 	return (
 		<>
-			{popup && <Delete state={[popup, setPopup]} fun={deletePostHandler} />}
+			{popup && <Delete state={[popup, setPopup]} func={deletePostHandler} />}
 			<JokeContainer>
 				<Header>
 					<ProfileIcon onClick={gotoProfileHandler} />

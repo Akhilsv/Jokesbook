@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ErrorModel from '../components/ErrorModel/ErrorModel';
 import { LoadHolder, Loading } from '../components/Loading';
 import db from '../Firebase';
 
@@ -17,6 +18,7 @@ import {
 } from './NewJoke';
 
 const PostEdit = () => {
+	const [message, setMessage] = useState(false);
 	const [title, setTitle] = useState('');
 	const [joke, setJoke] = useState('');
 	const [type, setType] = useState('private');
@@ -47,9 +49,10 @@ const PostEdit = () => {
 				joke,
 				type,
 			})
-            .then(() => {
-                console.log('updated')
-            })
+			.then(() => {
+				setMessage('Updated');
+				
+			})
 			.catch((e) => console.log(e));
 	};
 	const titleHandler = (e) => {
@@ -70,12 +73,13 @@ const PostEdit = () => {
 					<Loading />
 				</LoadHolder>
 			)}
+			{!loading && message && <ErrorModel state={[message, setMessage]} />}
 			{!loading && (
 				<FormHolder>
 					<Form onSubmit={submithandler}>
 						{/* <Label>Joker name</Label>
 					<Input value={name} onChange={nameHandler}></Input> */}
-						<Label>Title</Label> 
+						<Label>Title</Label>
 						<Input value={title} onChange={titleHandler}></Input>
 						<Label>Write your joke</Label>
 						<JokeInput onChange={jokeHandler} value={joke}></JokeInput>

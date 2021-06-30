@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineDelete } from 'react-icons/ai';
 
-const Delete = ({ state, fun }) => {
+const Delete = ({ state, func }) => {
 	const [popup, setPopup] = state;
 	const deleteHandler = () => {
-		fun();
+		func();
 	};
 	const cancelHandler = () => {
 		setPopup(false);
